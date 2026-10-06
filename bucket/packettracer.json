@@ -1,0 +1,33 @@
+{
+    "version": "9.0.1",
+    "description": "Network simulation and visualization for Cisco networking labs",
+    "homepage": "https://www.netacad.com/cisco-packet-tracer",
+    "license": "Proprietary",
+    "architecture": {
+        "64bit": {
+            "url": "https://archive.org/download/cisco-packet-tracer-901-mac-os-64bit/CiscoPacketTracer_901_win_64bit.exe",
+            "hash": "615e60ba1d58ec2f61bf7f0d5e7fcc735d0204ef769c6a741db5165c854efdeb"
+        }
+    },
+    "innosetup": true,
+    "bin": [
+        [
+            "bin\\PacketTracer.exe",
+            "packettracer"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "bin\\PacketTracer.exe",
+            "Cisco Packet Tracer"
+        ]
+    ],
+    "env_set": {
+        "PT8HOME": "$dir"
+    },
+    "notes": [
+        "This package uses a third-party Archive.org mirror; Cisco's software license applies.",
+        "Launch Packet Tracer from the Start menu or run 'packettracer'. Sign in with your Cisco account when prompted.",
+        "Save your own labs outside the Scoop installation directory. Settings and labs in Packet Tracer's user folder are managed by the application."
+    ]
+}

@@ -1,0 +1,26 @@
+name: Validate manifest
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Download official Scoop schema
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://raw.githubusercontent.com/ScoopInstaller/Scoop/master/schema.json -OutFile "$env:RUNNER_TEMP/scoop-schema.json"
+      - name: Validate manifest
+        shell: pwsh
+        run: |
+          ./scripts/Test-Manifest.ps1 -SchemaPath "$env:RUNNER_TEMP/scoop-schema.json"
