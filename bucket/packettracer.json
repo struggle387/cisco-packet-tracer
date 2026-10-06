@@ -10,24 +10,53 @@
         }
     },
     "innosetup": true,
+    "extract_to": "CiscoPacketTracer-Scoop",
+    "pre_install": [
+        "if ($global) { throw 'Packet Tracer document redirection requires a per-user Scoop installation.' }",
+        "$ptUserFolder = Join-Path $env:USERPROFILE 'CiscoPacketTracer-Scoop'",
+        "$ptDocuments = Join-Path $persist_dir 'documents'",
+        "$ptUserItem = Get-Item -LiteralPath $ptUserFolder -Force -ErrorAction SilentlyContinue",
+        "if ($ptUserItem -and ($ptUserItem.LinkType -ne 'Junction' -or [IO.Path]::GetFullPath([string]$ptUserItem.Target).TrimEnd('\\') -ne [IO.Path]::GetFullPath($ptDocuments).TrimEnd('\\'))) {",
+        "    throw \"The folder '$ptUserFolder' already exists and is not this package's data junction. Its contents have been left untouched.\"",
+        "}"
+    ],
     "bin": [
         [
-            "bin\\PacketTracer.exe",
+            "CiscoPacketTracer-Scoop\\bin\\PacketTracer.exe",
             "packettracer"
         ]
     ],
     "shortcuts": [
         [
-            "bin\\PacketTracer.exe",
+            "CiscoPacketTracer-Scoop\\bin\\PacketTracer.exe",
             "Cisco Packet Tracer"
         ]
     ],
     "env_set": {
-        "PT8HOME": "$dir"
+        "PT8HOME": "$dir\\CiscoPacketTracer-Scoop"
+    },
+    "persist": "documents",
+    "post_install": [
+        "$ptUserFolder = Join-Path $env:USERPROFILE 'CiscoPacketTracer-Scoop'",
+        "$ptDocuments = Join-Path $persist_dir 'documents'",
+        "if (-not (Get-Item -LiteralPath $ptUserFolder -Force -ErrorAction SilentlyContinue)) {",
+        "    New-Item -ItemType Junction -Path $ptUserFolder -Value $ptDocuments -ErrorAction Stop | Out-Null",
+        "}"
+    ],
+    "uninstaller": {
+        "script": [
+            "$ptUserFolder = Join-Path $env:USERPROFILE 'CiscoPacketTracer-Scoop'",
+            "$ptDocuments = Join-Path $persist_dir 'documents'",
+            "$ptUserItem = Get-Item -LiteralPath $ptUserFolder -Force -ErrorAction SilentlyContinue",
+            "if ($ptUserItem -and $ptUserItem.LinkType -eq 'Junction' -and [IO.Path]::GetFullPath([string]$ptUserItem.Target).TrimEnd('\\') -eq [IO.Path]::GetFullPath($ptDocuments).TrimEnd('\\')) {",
+            "    [IO.Directory]::Delete($ptUserFolder)",
+            "}"
+        ]
     },
     "notes": [
         "This package uses a third-party Archive.org mirror; Cisco's software license applies.",
         "Launch Packet Tracer from the Start menu or run 'packettracer'. Sign in with your Cisco account when prompted.",
-        "Save your own labs outside the Scoop installation directory. Settings and labs in Packet Tracer's user folder are managed by the application."
+        "Labs, settings, and user templates are stored in $persist_dir\\documents. Packet Tracer's User Folder shows a junction at %USERPROFILE%\\CiscoPacketTracer-Scoop that points there.",
+        "Existing labs in other folders are left untouched. Copy any labs you want to keep using into the persistent documents folder."
     ]
 }
