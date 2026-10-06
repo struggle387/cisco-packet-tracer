@@ -2,7 +2,7 @@
     "version": "9.0.1",
     "description": "Network simulation and visualization for Cisco networking labs",
     "homepage": "https://www.netacad.com/cisco-packet-tracer",
-    "license": "Proprietary",
+    "license": "Freeware",
     "architecture": {
         "64bit": {
             "url": "https://archive.org/download/cisco-packet-tracer-901-mac-os-64bit/CiscoPacketTracer_901_win_64bit.exe",
@@ -54,9 +54,6 @@
         ]
     },
     "notes": [
-        "This package uses a third-party Archive.org mirror; Cisco's software license applies.",
-        "Launch Packet Tracer from the Start menu or run 'packettracer'. Sign in with your Cisco account when prompted.",
-        "Labs, settings, and user templates are stored in $persist_dir\\documents. Packet Tracer's User Folder shows a junction at %USERPROFILE%\\CiscoPacketTracer-Scoop that points there.",
-        "Existing labs in other folders are left untouched. Copy any labs you want to keep using into the persistent documents folder."
+        "This package uses a third-party Archive.org mirror."
     ]
 }
