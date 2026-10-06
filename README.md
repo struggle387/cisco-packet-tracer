@@ -11,4 +11,4 @@ scoop bucket add packet-tracer https://github.com/struggle387/cisco-packet-trace
 scoop install packet-tracer/packettracer
 ```
 
-Packet Tracer's documents and settings are stored automatically in `scoop\persist\packettracer\documents`. Its User Folder points there through a junction at `%USERPROFILE%\CiscoPacketTracer-Scoop`. Existing labs in other folders are left untouched.
+Packet Tracer's documents and settings are stored automatically in `scoop\persist\packettracer\documents`. Its User Folder points there through a junction at `%USERPROFILE%\CiscoPacketTracer-Scoop`.
